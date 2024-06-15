@@ -1,3 +1,5 @@
+import { Strapi } from "@strapi/strapi";
+import { startPolling, stopPolling } from "./telegram";
 export default {
   /**
    * An asynchronous register function that runs before
@@ -5,7 +7,9 @@ export default {
    *
    * This gives you an opportunity to extend code.
    */
-  register(/*{ strapi }*/) {},
+  register() {
+    startPolling();
+  },
 
   /**
    * An asynchronous bootstrap function that runs before
@@ -15,4 +19,8 @@ export default {
    * run jobs, or perform some special logic.
    */
   bootstrap(/*{ strapi }*/) {},
+
+  async destroy() {
+    await stopPolling();
+  },
 };
